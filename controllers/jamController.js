@@ -23,6 +23,9 @@ export const getPublishedJams = asyncHandler(async(req, res)=>{
         where:{
             published: true
         },
+        include:{
+            creator: true
+        },
         orderBy:{
             created_at:'desc'
         }
