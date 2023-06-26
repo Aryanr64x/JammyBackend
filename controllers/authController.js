@@ -59,11 +59,7 @@ export const signin = asyncHandler(async(req,res, next)=>{
    delete user.password
    res.json({
        data:{
-           token, user:{
-               _id: user._id,
-               username: user.username,
-               email: user.email,
-           }
+           token, user
        }
    })
 });

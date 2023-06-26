@@ -18,4 +18,19 @@ model User {
   email String @unique
   password String 
   create_at DateTime @default(now())
+  jams Jam[]
+}
+
+
+
+model Jam{
+  id Int @id @default(autoincrement())
+  title String
+  body String @default("")
+  published Boolean @default(false)
+  created_at DateTime @default(now())
+  creator User @relation(references: [id], fields: [creator_id])
+  creator_id Int
+  
+
 }

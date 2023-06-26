@@ -16,7 +16,8 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.0",
     "nodemon": "^2.0.22",
-    "promisify": "^0.0.3"
+    "promisify": "^0.0.3",
+    "socket.io": "^4.6.2"
   },
   "type": "module",
   "devDependencies": {
