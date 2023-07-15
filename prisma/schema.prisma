@@ -26,11 +26,10 @@ model User {
 model Jam{
   id Int @id @default(autoincrement())
   title String
-  body String @default("")
+  shortBody String @default("") @db.VarChar(100)
+  body String @default("") @db.VarChar(1000)
   published Boolean @default(false)
   created_at DateTime @default(now())
   creator User @relation(references: [id], fields: [creator_id])
   creator_id Int
-  
-
 }

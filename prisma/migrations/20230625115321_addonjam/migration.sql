@@ -1,3 +1,0 @@
--- AlterTable
-ALTER TABLE `jam` ADD COLUMN `body` VARCHAR(191) NOT NULL DEFAULT '',
-    ADD COLUMN `published` BOOLEAN NULL;
