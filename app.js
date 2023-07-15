@@ -29,6 +29,9 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/jam', jamRouter)
 
+app.get('/', (req, res)=>{
+  res.json("WELCOME TO THE JAMMY API")
+})
 
 
 io.on('connection', (socket) => {
