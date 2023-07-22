@@ -29,7 +29,13 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/jam', jamRouter)
 
-app.get('/', (req, res)=>{
+app.get('/', async(req, res)=>{
+  try{
+    const users = await prisma.user.findMany({})
+    console.log(users)
+  }catch(e){
+    console.log(e)
+  }
   res.json("WELCOME TO THE JAMMY API")
 })
 
