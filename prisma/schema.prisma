@@ -13,23 +13,31 @@ datasource db {
 
 
 model User {
+
   id Int @id @default(autoincrement())
   username String 
   email String @unique
   password String 
   create_at DateTime @default(now())
-  jams Jam[]
-}
+  jams Jam[] @relation("creation")
+  contributedJams Jam[] @relation("contribution")
 
+
+
+}
+                                 
 
 
 model Jam{
   id Int @id @default(autoincrement())
+  passkey String
   title String
   shortBody String @default("") @db.VarChar(100)
-  body String @default("") @db.VarChar(1000)
+  body String @default("") 
   published Boolean @default(false)
   created_at DateTime @default(now())
-  creator User @relation(references: [id], fields: [creator_id])
+  creator User @relation(references: [id], fields: [creator_id], "creation") 
   creator_id Int
+  contributers User[] @relation("contribution")
+  
 }
