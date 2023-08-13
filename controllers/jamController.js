@@ -64,9 +64,9 @@ export const getPublishedJams = asyncHandler(async (req, res) => {
     })
 
 
-    // jams.forEach((jam) => {
-    //     delete jam.body
-    // })
+    jams.forEach((jam) => {
+        delete jam.body
+    })
 
     res.json(jams)
 })
