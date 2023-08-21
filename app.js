@@ -29,6 +29,11 @@ app.use(express.json())
 app.use('/api/auth', authRouter)
 app.use('/api/jam', jamRouter)
 
+app.delete('/delete', async(req, res)=>{
+    await prisma.jam.delete({where:{id:2}})
+    res.json("done")
+})
+
 app.get('/', async (req, res) => {
   try {
     const users = await prisma.user.findMany({})

@@ -32,7 +32,7 @@ export const signup = asyncHandler(async(req, res)=>{
     })
     delete user.password
   
-    const token = jwt.sign({id: user.id}, "ANNESHA_GUHA");
+    const token = jwt.sign({id: user.id}, env(JWT_SIGN));
  
     res.json({
         data: {
