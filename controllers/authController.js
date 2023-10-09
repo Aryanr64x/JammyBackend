@@ -32,7 +32,7 @@ export const signup = asyncHandler(async(req, res)=>{
     })
     delete user.password
   
-    const token = jwt.sign({id: user.id}, env(JWT_SIGN));
+    const token = jwt.sign({id: user.id}, process.env.JWT_SIGN);
  
     res.json({
         data: {
@@ -55,7 +55,7 @@ export const signin = asyncHandler(async(req,res, next)=>{
    if(!compare){
         return res.status(400).json("Incorrect Email and Password Combination")
    }
-   const token = jwt.sign({id: user.id}, env(JWT_SIGN));
+   const token = jwt.sign({id: user.id}, process.env.JWT_SIGN);
    delete user.password
    res.json({
        data:{
@@ -70,7 +70,7 @@ export const signin = asyncHandler(async(req,res, next)=>{
 export  const protect = asyncHandler(async(req, res, next)=>{
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         const token = req.headers.authorization.split(' ')[1]
-        const decoded =   await promisify(jwt.verify)(token, env(JWT_SIGN))
+        const decoded =   await promisify(jwt.verify)(token, process.env.JWT_SIGN)
         const user  = await prisma.user.findUnique({where:{id: decoded.id}})
         if(!user){
             return res.status(401).send("User no longer exists in the database");

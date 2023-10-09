@@ -1,4 +1,7 @@
+import asyncHandler from 'express-async-handler'
+
 import express, { application } from 'express'
+
 
 const app = express();
 
@@ -30,7 +33,9 @@ app.use('/api/auth', authRouter)
 app.use('/api/jam', jamRouter)
 
 app.delete('/delete', async(req, res)=>{
-    await prisma.jam.delete({where:{id:2}})
+    const jams = await prisma.user.findMany({})
+    console.log(jams)
+    await prisma.jam.delete({where:{id:7}})
     res.json("done")
 })
 
@@ -45,6 +50,20 @@ app.get('/', async (req, res) => {
 })
 
 
+
+app.use('*', ()=>{
+  let error = new Error("404 route not found")
+  error.code = 404
+  throw error;
+})
+
+app.use((err, req, res, next)=>{
+    err.code = err.code || 500;
+    err.message = err.message || "Oops ! Something just went wrong"
+    res.status(err.code).json(err.message)
+})
+
+
 io.on('connection', (socket) => {
 
 
@@ -53,6 +72,7 @@ io.on('connection', (socket) => {
     try {
 
       if (data.userExists == 0 && data.isCreator == 0) {
+        // creating new contrubyter here saves me an API CALL
         console.log("New contributer is being created")
         await prisma.user.update({ where: { id: data.userId }, data: { contributedJams: { connect: { id: data.jamId } } } });
         const user = await prisma.user.findUnique({ where: { id: data.userId } });
