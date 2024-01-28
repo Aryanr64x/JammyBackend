@@ -11,6 +11,7 @@ const server = http.createServer(app);
 
 import { Server } from 'socket.io';
 
+
 const io = new Server(server, {
   cors: {
     origin: "*"
@@ -22,7 +23,7 @@ import authRouter from './routes/authRouter.js'
 import { PrismaClient } from '@prisma/client';
 import jamRouter from './routes/jamRouter.js';
 export const prisma = new PrismaClient()
-
+   
 
 
 
@@ -33,10 +34,12 @@ app.use('/api/auth', authRouter)
 app.use('/api/jam', jamRouter)
 
 app.delete('/delete', async(req, res)=>{
-    const jams = await prisma.user.findMany({})
+
+    const jams = await prisma.jam.findMany({})
     console.log(jams)
-    await prisma.jam.delete({where:{id:7}})
+    await prisma.jam.delete({where:{id:8}})
     res.json("done")
+
 })
 
 app.get('/', async (req, res) => {

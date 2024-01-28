@@ -13,6 +13,7 @@ function generatePasskey(digits) {
 
 export const createJam = asyncHandler(async (req, res) => {
     const passkey = generatePasskey(6)
+    
 
 
     const jam = await prisma.jam.create({
@@ -94,6 +95,8 @@ export const publishJam = asyncHandler(async (req, res) => {
 })
 
 
+
+// It does 2 jobs, checks that the passkey is correct for the jam or not and aslo checks if the user is contributer or not 
 export const verifyPasskey = asyncHandler(async (req, res) => {
     const jam = await prisma.jam.findUnique({ where: { id: parseInt(req.params.id) }, select: { passkey: true } })
     const exists = await prisma.jam.findFirst({
