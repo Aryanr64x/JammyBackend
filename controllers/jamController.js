@@ -5,7 +5,7 @@ import nodemailer from 'nodemailer'
 
 
 function generatePasskey(digits) {
-    const min = 10 ** (digits - 1);
+    const min = 10 ** (digits - 1); 
     const max = 10 ** digits - 1;
     const passkey = crypto.randomInt(min, max);
     return passkey.toString();

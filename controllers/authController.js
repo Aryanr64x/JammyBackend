@@ -30,6 +30,8 @@ export const signup = asyncHandler(async(req, res)=>{
             username, email, password: hash
         }
     })
+
+
     delete user.password
   
     const token = jwt.sign({id: user.id}, process.env.JWT_SIGN);
@@ -46,22 +48,35 @@ export const signup = asyncHandler(async(req, res)=>{
 
 export const signin = asyncHandler(async(req,res, next)=>{
    const {email , password} = req.body;
+    console.log(prisma.user);
    const user = await prisma.user.findUnique({
-    where:{email: email}
-   });
+   
+        where:{email: email}
+   
+    });
+
    if(!user) return res.status(400).json("Your email is not registered yet! Please create an account first")
+   
    const compare = await bcrypt.compare(password, user.password);
+   
    console.log(compare)
+   console
+   
    if(!compare){
         return res.status(400).json("Incorrect Email and Password Combination")
-   }
-   const token = jwt.sign({id: user.id}, process.env.JWT_SIGN);
-   delete user.password
-   res.json({
+   
+    }
+   
+    const token = jwt.sign({id: user.id}, process.env.JWT_SIGN);
+   
+    delete user.password
+   
+    res.json({
        data:{
            token, user
        }
-   })
+   
+    })
 });
 
 
@@ -80,4 +95,5 @@ export  const protect = asyncHandler(async(req, res, next)=>{
     }else{
         res.status(401).send("Your are not authorized for this request");
     }
-})
+});
+
