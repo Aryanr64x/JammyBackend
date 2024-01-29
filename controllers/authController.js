@@ -54,13 +54,13 @@ export const signin = asyncHandler(async(req,res, next)=>{
         where:{email: email}
    
     });
-
+    
+    console.log(user);
    if(!user) return res.status(400).json("Your email is not registered yet! Please create an account first")
    
    const compare = await bcrypt.compare(password, user.password);
    
    console.log(compare)
-   console
    
    if(!compare){
         return res.status(400).json("Incorrect Email and Password Combination")
